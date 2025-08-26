@@ -424,6 +424,22 @@
   </div>
 
   <script>
+    // Webhook URLs mapping for each location
+    const webhookUrls = {
+      "East Point": "https://chat.googleapis.com/v1/spaces/AAQAV41Bxrs/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=coQjqN3b_q9q1QRMrJJDiRmdZPPnsuuUXZtm2CD_nig",
+      "Rustavi": "https://chat.googleapis.com/v1/spaces/AAQAfAd94-o/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ihXXVvGfJJIJCxDtxXmYiVcoP63gxGWp6cjV1YVHca4",
+      "Deda Ena": "https://chat.googleapis.com/v1/spaces/AAQAvasgk4E/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=9ZvEgAuB4tWU_-BsZ-lrgQe5UtKmF95h78qZ-Rbx82o",
+      "Agmashenebeli": "https://chat.googleapis.com/v1/spaces/AAQAKBlPT9I/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=6FQNsiR4qMngESMiZnBhl5nVnvPtcOxl9-Ubiuj61ys",
+      "Beliashvili": "https://chat.googleapis.com/v1/spaces/AAQAT-26aSc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ECND1a8uPRU2ZcNjUy33gu18LYLflwGfTd7K3e1FBLc",
+      "Paliashvili": "https://chat.googleapis.com/v1/spaces/AAQAkmM_mME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=5kDgNlD2oqfJX4sfNwOPlvFvmuD206U3TCBdsYDW_iE",
+      "Abashidze container": "https://chat.googleapis.com/v1/spaces/AAQA1Ol2Af8/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=dZl1s0TwTNMdKKksE1IEtsOw0VhjkIh33qE5yHCc3LI",
+      "Abashidze": "https://chat.googleapis.com/v1/spaces/AAQAA69rmqM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=NWp1gGm0IrOro_AD0JxM8bSSErnCvDCdSv-PWTxO-uY",
+      "Turtle Lake": "https://chat.googleapis.com/v1/spaces/AAQA2lG1BPY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=FpAcsIAMw-kwUkS-fQRYuxhYXLxCMuzY5INFoV9JPHs",
+      "Lisi Lake": "https://chat.googleapis.com/v1/spaces/AAQAQFUbi38/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=GPQzOQzCUm9yIFIlNadJRPAhRXU6uEJ7AUFlSARoaB8",
+      "M2": "https://chat.googleapis.com/v1/spaces/AAQA-H2zh2g/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=R_yo60mbgu-VGWsVMOdZVeiQVuWS9MVQEiV3_fYcWvQ",
+      "Bukia": "https://chat.googleapis.com/v1/spaces/AAQAjX1ETLY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=RTpdha1BqoH8mwxgyXESfICLnKHerS-m5o-kdqwXiJM"
+    };
+
     const questionSelect = document.getElementById("question");
     const otherDiv = document.getElementById("otherProblemDiv");
     const otherInput = document.getElementById("otherProblem");
@@ -463,11 +479,18 @@
         return;
       }
 
+      // Get the webhook URL for the selected location
+      const webhookUrl = webhookUrls[location];
+      
+      if (!webhookUrl) {
+        console.error("No webhook URL found for location:", location);
+        showMessage(errorMessage);
+        return;
+      }
+
       if (question === "სხვა ტექნიკური პრობლემა" && other) {
         question = `სხვა პრობლემა: ${other}`;
       }
-
-      const webhookUrl = "https://chat.googleapis.com/v1/spaces/AAQAVKz_ToM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=WmVvzonDW9zuLANGOPauSBVYEa0WCuVQN6cstoOW0yE";
 
       let fullMessage = `📩 ახალი შეტყობინება:\n\n👤 მომხმარებელი: ${name}\n📞 ნომერი: ${phone}\n📍 ლოკაცია: ${location}\n❓ პრობლემა: ${question}`;
 
@@ -493,10 +516,10 @@
       otherInput.required = false;
 
       try {
-        // Send one comprehensive message after 5 seconds
+        // Send message to the specific location's webhook after 5 seconds
         setTimeout(async () => {
           try {
-            console.log("Sending comprehensive message...");
+            console.log(`Sending message to ${location}:`, webhookUrl);
             const response = await fetch(webhookUrl, {
               method: "POST",
               headers: {
@@ -506,12 +529,12 @@
             });
             
             if (response.ok) {
-              console.log("Message sent successfully");
+              console.log(`Message sent successfully to ${location}`);
             } else {
-              console.error("Failed to send message:", response.status);
+              console.error(`Failed to send message to ${location}:`, response.status);
             }
           } catch (error) {
-            console.error("Error sending message:", error);
+            console.error(`Error sending message to ${location}:`, error);
           }
         }, 5000);
         
