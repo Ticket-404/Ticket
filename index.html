@@ -424,20 +424,23 @@
   </div>
 
   <script>
+    // Summary webhook URL for monitoring
+    const SUMMARY_WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAU4qjMdA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=475UDu3PBnLOTCJ0KrA0HcNwgVGUlSf2BuWjRvYuqpk";
+
     // Webhook URLs mapping for each location
     const webhookUrls = {
-      "East Point": "https://chat.googleapis.com/v1/spaces/AAQAV41Bxrs/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=coQjqN3b_q9q1QRMrJJDiRmdZPPnsuuUXZtm2CD_nig",
-      "Rustavi": "https://chat.googleapis.com/v1/spaces/AAQAfAd94-o/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ihXXVvGfJJIJCxDtxXmYiVcoP63gxGWp6cjV1YVHca4",
-      "Deda Ena": "https://chat.googleapis.com/v1/spaces/AAQAvasgk4E/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=9ZvEgAuB4tWU_-BsZ-lrgQe5UtKmF95h78qZ-Rbx82o",
-      "Agmashenebeli": "https://chat.googleapis.com/v1/spaces/AAQAKBlPT9I/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=6FQNsiR4qMngESMiZnBhl5nVnvPtcOxl9-Ubiuj61ys",
-      "Beliashvili": "https://chat.googleapis.com/v1/spaces/AAQAT-26aSc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ECND1a8uPRU2ZcNjUy33gu18LYLflwGfTd7K3e1FBLc",
-      "Paliashvili": "https://chat.googleapis.com/v1/spaces/AAQAkmM_mME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=5kDgNlD2oqfJX4sfNwOPlvFvmuD206U3TCBdsYDW_iE",
-      "Abashidze container": "https://chat.googleapis.com/v1/spaces/AAQA1Ol2Af8/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=dZl1s0TwTNMdKKksE1IEtsOw0VhjkIh33qE5yHCc3LI",
-      "Abashidze": "https://chat.googleapis.com/v1/spaces/AAQAA69rmqM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=NWp1gGm0IrOro_AD0JxM8bSSErnCvDCdSv-PWTxO-uY",
-      "Turtle Lake": "https://chat.googleapis.com/v1/spaces/AAQA2lG1BPY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=FpAcsIAMw-kwUkS-fQRYuxhYXLxCMuzY5INFoV9JPHs",
-      "Lisi Lake": "https://chat.googleapis.com/v1/spaces/AAQAQFUbi38/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=GPQzOQzCUm9yIFIlNadJRPAhRXU6uEJ7AUFlSARoaB8",
-      "M2": "https://chat.googleapis.com/v1/spaces/AAQA-H2zh2g/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=R_yo60mbgu-VGWsVMOdZVeiQVuWS9MVQEiV3_fYcWvQ",
-      "Bukia": "https://chat.googleapis.com/v1/spaces/AAQAjX1ETLY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=RTpdha1BqoH8mwxgyXESfICLnKHerS-m5o-kdqwXiJM"
+      "East Point": "https://chat.googleapis.com/v1/spaces/AAQA-VjZTl4/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0JKcC5uNABgsY2DSFcaNBKR8ptoxiwRtuRshCWtwBR8",
+      "Rustavi": "https://chat.googleapis.com/v1/spaces/AAQAHxnyi8c/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=KyuCA4vbyRfaPYDNy8BTMhhEFyJNq6XiBOpohC3TgZ8",
+      "Deda Ena": "https://chat.googleapis.com/v1/spaces/AAQAxqIXorc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=PCSNVhkuH7NeMM3RrYdtlNrEO_qGLfGrzy99LRJ0j0c",
+      "Agmashenebeli": "https://chat.googleapis.com/v1/spaces/AAQALzNGgd0/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=b0Z00-bit33piViZQqfFi6E1HewofgUmbLv08YpQscA",
+      "Beliashvili": "https://chat.googleapis.com/v1/spaces/AAQA7H8wcYA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=KAeP-2V8WvLtc4-RZ41SLw-F_UOIVlh572RvUQbjcdI",
+      "Paliashvili": "https://chat.googleapis.com/v1/spaces/AAQAMlxb3Nc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=29Rv1hoUFj4mJ9rqNg_kS-BnfHKFvV2PAsat4p1XxLI",
+      "Abashidze container": "https://chat.googleapis.com/v1/spaces/AAQAfVHbCHU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=A-3-kViNa3awG1hk7JC_F1ix2bOIlaqGLak4DLX2ASU",
+      "Abashidze": "https://chat.googleapis.com/v1/spaces/AAQAeaf0-xA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=cJe5xhQ2RoyGG5-Oj2wqseD7KOs5JPgsieZgktlhlcM",
+      "Turtle Lake": "https://chat.googleapis.com/v1/spaces/AAQAn0ECrZU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=gASDLPassywuga93VDF7Y4pe7cn0qBPiMbKIst1ytPc",
+      "Lisi Lake": "https://chat.googleapis.com/v1/spaces/AAQAWQitP2E/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=1c41OkLR7mHmj7xhPvRbVjMvIbVhZF-vY1y5K0TEOig",
+      "M2": "https://chat.googleapis.com/v1/spaces/AAQAH7OUzME/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ZQUadTbMr1Fz2-Ua66aofegH4P6ZBWLvOFv1J4TdgS4",
+      "Bukia": "https://chat.googleapis.com/v1/spaces/AAQApHg0bLg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=514pxNMrUAdZ9LLxuPcO60wdzUaZPIG6cFOk-0VDIXE"
     };
 
     const questionSelect = document.getElementById("question");
@@ -463,6 +466,53 @@
       setTimeout(() => {
         element.style.display = "none";
       }, duration);
+    }
+
+    // Function to get problem type icon
+    function getProblemIcon(question) {
+      if (question.includes("ინტერნეტი არ მუშაობს")) return "🌐";
+      if (question.includes("შოფიფაი ჭედავს")) return "🛒";
+      if (question.includes("ფასები არასწორია")) return "💰";
+      if (question.includes("სხვა პრობლემა")) return "🔧";
+      return "❓";
+    }
+
+    // Function to send summary notification
+    async function sendSummaryNotification(name, phone, location, question) {
+      const now = new Date();
+      const timeString = now.toLocaleString('ka-GE', { 
+        timeZone: 'Asia/Tbilisi',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+
+      const problemIcon = getProblemIcon(question);
+      
+      const summaryMessage = {
+        text: `📋 **ახალი პრობლემის რეპორტი**\n\n⏰ **დრო:** ${timeString}\n📍 **ლოკაცია:** ${location}\n${problemIcon} **პრობლემის ტიპი:** ${question}\n👤 **მომხმარებელი:** ${name}\n📞 **ტელეფონი:** ${phone}\n\n---\n💡 *დეტალური ინფორმაცია გაიგზავნა ${location} ჯგუფში*`
+      };
+
+      try {
+        const response = await fetch(SUMMARY_WEBHOOK_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(summaryMessage)
+        });
+        
+        if (response.ok) {
+          console.log("Summary notification sent successfully");
+        } else {
+          console.error("Failed to send summary notification:", response.status);
+        }
+      } catch (error) {
+        console.error("Error sending summary notification:", error);
+      }
     }
 
     async function sendMessage(event) {
@@ -516,10 +566,13 @@
       otherInput.required = false;
 
       try {
-        // Send message to the specific location's webhook after 5 seconds
+        // Send summary notification immediately
+        await sendSummaryNotification(name, phone, location, question);
+        
+        // Send detailed message to the specific location's webhook after 5 seconds
         setTimeout(async () => {
           try {
-            console.log(`Sending message to ${location}:`, webhookUrl);
+            console.log(`Sending detailed message to ${location}:`, webhookUrl);
             const response = await fetch(webhookUrl, {
               method: "POST",
               headers: {
@@ -529,12 +582,12 @@
             });
             
             if (response.ok) {
-              console.log(`Message sent successfully to ${location}`);
+              console.log(`Detailed message sent successfully to ${location}`);
             } else {
-              console.error(`Failed to send message to ${location}:`, response.status);
+              console.error(`Failed to send detailed message to ${location}:`, response.status);
             }
           } catch (error) {
-            console.error(`Error sending message to ${location}:`, error);
+            console.error(`Error sending detailed message to ${location}:`, error);
           }
         }, 5000);
         
